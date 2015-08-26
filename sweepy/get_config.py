@@ -6,7 +6,7 @@ from ConfigParser import ConfigParser
 from StringIO import StringIO
 
 def parse_config(raw):
-    config = _config = ConfigParser()
+    config = ConfigParser()
     if raw.strip().startswith('['):
         config.readfp(StringIO(raw))
     else:
