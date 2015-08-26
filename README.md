@@ -30,4 +30,44 @@ Run
 pip install -r requirements.txt
 ```
 
+# How to run
 
+To start a streaming client I recommend to use supervisor. Place this config to `/etc/supervisor/conf.d/streaming.conf`
+
+```
+[program:twitter_streaming]
+command=/usr/bin/python /home/ubuntu/stream.py
+directory=/home/ubuntu
+autostart=true
+autorestart=true
+startretries=3
+stderr_logfile=/home/ubuntu/stream.err.log
+stdout_logfile=/home/ubuntu/stream.out.log
+user=ubuntu
+```
+
+Change the configuration according to your enviroment. I put this script on EC2
+
+Reread the configuration
+
+```
+sudo supervisorctl reread
+```
+
+And update the configuration
+
+```
+sudo supervisorctl update
+```
+
+The script should be up and running. 
+
+# Processer script
+
+You can just run 
+
+```
+make run-processer
+```
+
+It will process the raw tweet and create a users collection and make the tweet as `processed`
