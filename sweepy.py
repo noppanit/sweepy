@@ -69,7 +69,7 @@ def get_friends_ids(user_id):
     return ids
 
 def process_user(user):
-    user_id = user['id']
+    user_id = user['id_str']
     screen_name = user['screen_name']
     
     print 'Processing user : {}'.format(screen_name)
