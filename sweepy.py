@@ -34,7 +34,7 @@ def is_user_in_db(user_id):
     return get_user_from_db(user_id) is None
 
 def get_user_from_db(user_id):
-    return users.find_one({'user.id' : user_id})
+    return users.find_one({'id_str' : user_id})
 
 def get_user_from_twitter(user_id):
     return api.get_user(user_id)
