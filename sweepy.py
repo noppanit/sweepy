@@ -33,7 +33,7 @@ raw_tweets = db.raw_tweets
 users = db.users
 
 def is_user_in_db(screen_name):
-    return get_user_from_db(screen_name) is None
+    return not get_user_from_db(screen_name) is None
 
 def get_user_from_db(screen_name):
     return users.find_one({'screen_name' : screen_name})
@@ -75,7 +75,7 @@ def process_user(user):
     
     print 'Processing user : {}'.format(screen_name)
 
-    if not is_user_in_db(screen_name):
+    if is_user_in_db(screen_name):
         user['followers_ids'] = get_followers_ids(screen_name)
         user['friends_ids'] = get_friends_ids(screen_name)
 
