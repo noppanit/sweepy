@@ -74,13 +74,13 @@ def process_user(user):
     
     print 'Processing user : {}'.format(screen_name)
 
-    the_user = get_user_from_db(user_id)
-    print '{} exists!'.format(screen_name)
-    if the_user is None:
+    if not is_user_in_db(user_id):
         user['followers_ids'] = get_followers_ids(screen_name)
         user['friends_ids'] = get_friends_ids(screen_name)
 
         users.insert_one(user)
+    else:
+        print '{} exists!'.format(screen_name)
 
     print 'End processing user : {}'.format(screen_name)
 
