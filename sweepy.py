@@ -20,6 +20,8 @@ MONGO_PASSWORD = config.get('MONGO_PASSWORD')
 
 client = MongoClient(MONGO_URL, int(MONGO_PORT))
 
+print 'Establishing Tweepy connection'
+
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
 api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True, retry_count=3)
