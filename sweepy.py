@@ -30,51 +30,50 @@ db.authenticate(MONGO_USERNAME, MONGO_PASSWORD)
 raw_tweets = db.raw_tweets
 users = db.users
 
-def is_user_in_db(user_id):
-    return get_user_from_db(user_id) is None
+def is_user_in_db(screen_name):
+    return get_user_from_db(screen_name) is None
 
-def get_user_from_db(user_id):
-    return users.find_one({'id_str' : user_id})
+def get_user_from_db(screen_name):
+    return users.find_one({'screen_name' : screen_name})
 
 def get_user_from_twitter(user_id):
     return api.get_user(user_id)
 
-def get_followers(user_id):
+def get_followers(screen_name):
     users = []
-    for i, page in enumerate(tweepy.Cursor(api.followers, id=user_id, count=200).pages()):
+    for i, page in enumerate(tweepy.Cursor(api.followers, id=screen_name, count=200).pages()):
         print 'Getting page {} for followers'.format(i)
         users += page
     return users
 
-def get_friends(user_id):
+def get_friends(screen_name):
     users = []
-    for i, page in enumerate(tweepy.Cursor(api.friends, id=user_id, count=200).pages()):
+    for i, page in enumerate(tweepy.Cursor(api.friends, id=screen_name, count=200).pages()):
         print 'Getting page {} for friends'.format(i)
         users += page
     return users
 
-def get_followers_ids(user_id):
+def get_followers_ids(screen_name):
     ids = []
-    for i, page in enumerate(tweepy.Cursor(api.followers_ids, id=user_id, count=5000).pages()):
+    for i, page in enumerate(tweepy.Cursor(api.followers_ids, id=screen_name, count=5000).pages()):
         print 'Getting page {} for followers ids'.format(i)
         ids += page
 
     return ids
 
-def get_friends_ids(user_id):
+def get_friends_ids(screen_name):
     ids = []
-    for i, page in enumerate(tweepy.Cursor(api.friends_ids, id=user_id, count=5000).pages()):
+    for i, page in enumerate(tweepy.Cursor(api.friends_ids, id=screen_name, count=5000).pages()):
         print 'Getting page {} for friends ids'.format(i)
         ids += page
     return ids
 
 def process_user(user):
-    user_id = user['id_str']
     screen_name = user['screen_name']
     
     print 'Processing user : {}'.format(screen_name)
 
-    if not is_user_in_db(user_id):
+    if not is_user_in_db(screen_name):
         user['followers_ids'] = get_followers_ids(screen_name)
         user['friends_ids'] = get_friends_ids(screen_name)
 
