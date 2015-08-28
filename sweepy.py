@@ -57,17 +57,24 @@ def get_friends(screen_name):
 
 def get_followers_ids(screen_name):
     ids = []
-    for i, page in enumerate(tweepy.Cursor(api.followers_ids, id=screen_name, count=5000).pages()):
-        print 'Getting page {} for followers ids'.format(i)
-        ids += page
+    try:
+        for i, page in enumerate(tweepy.Cursor(api.followers_ids, id=screen_name, count=5000).pages()):
+            print 'Getting page {} for followers ids'.format(i)
+            ids += page
+    except tweepy.error.TweepError as e:
+        print e.message
 
     return ids
 
 def get_friends_ids(screen_name):
     ids = []
-    for i, page in enumerate(tweepy.Cursor(api.friends_ids, id=screen_name, count=5000).pages()):
-        print 'Getting page {} for friends ids'.format(i)
-        ids += page
+    try:
+        for i, page in enumerate(tweepy.Cursor(api.friends_ids, id=screen_name, count=5000).pages()):
+            print 'Getting page {} for friends ids'.format(i)
+            ids += page
+    except tweepy.error.TweepError as e:
+        print e.message
+        
     return ids
 
 def process_user(user):
