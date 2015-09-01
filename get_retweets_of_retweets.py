@@ -30,21 +30,17 @@ db = client.tweets
 db.authenticate(MONGO_USERNAME, MONGO_PASSWORD)
 
 raw_tweets = db.raw_tweets
-users = db.users
-
-def get_retweets(tweet_id):
-    retweets = []
-    for i, page in enumerate(tweepy.Cursor(api.retweets, id=tweet_id, count=200).pages()):
-        print 'Getting page {} for retweets'.format(i)
-        retweets += page
-    return retweets
 
 if __name__ == "__main__":
-
+    tweets = []
     for doc in raw_tweets.find({'retweeted_status.id_str' : '636345902915911680'}):
+        tweets.append(doc)
+
+    print 'Fetch {} documents'.format(len(tweets))
+    for tweet in tweets:
         try:
-            print 'Processing {}'.format(doc['id_str'])
-            retweets = get_retweets(doc['id_str'])
+            print 'Processing {}'.format(tweet['id_str'])
+            retweets = api.retweets(tweet['id_str'], count=100)
             if retweets:
                 print retweets 
         except tweepy.error.TweepError:
