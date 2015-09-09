@@ -1,2 +1,4 @@
 tweepy
 pymongo
+google-api-python-client
+pytest

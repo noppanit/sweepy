@@ -17,6 +17,7 @@ MONGO_URL = config.get('MONGO_URL')
 MONGO_PORT = config.get('MONGO_PORT')
 MONGO_USERNAME = config.get('MONGO_USERNAME')
 MONGO_PASSWORD = config.get('MONGO_PASSWORD')
+MONGO_DATABASE = config.get('MONGO_DATABASE')
 
 client = MongoClient(MONGO_URL, int(MONGO_PORT))
 
@@ -26,7 +27,7 @@ auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
 api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True, retry_count=3)
 
-db = client.tweets
+db = client[MONGO_DATABASE]
 db.authenticate(MONGO_USERNAME, MONGO_PASSWORD)
 
 raw_tweets = db.raw_tweets
