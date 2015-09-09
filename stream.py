@@ -14,9 +14,10 @@ MONGO_URL = config.get('MONGO_URL')
 MONGO_PORT = config.get('MONGO_PORT')
 MONGO_USERNAME = config.get('MONGO_USERNAME')
 MONGO_PASSWORD = config.get('MONGO_PASSWORD')
+MONGO_DATABASE = config.get('MONGO_DATABASE')
 
 connection = MongoClient(MONGO_URL, int(MONGO_PORT))
-db = connection['tweets']
+db = connection[MONGO_DATABASE]
 
   # MongoLab has authentication
 db.authenticate(MONGO_USERNAME, MONGO_PASSWORD)
