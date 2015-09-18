@@ -6,3 +6,6 @@ run-processer:
 
 build-docker:
 	docker build -t sweepy .
+
+run-container:
+	docker run -d -P sweepy supervisord
