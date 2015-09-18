@@ -21,51 +21,31 @@ PROCESS_TWITTER_ACCESS_TOKEN_SECRET=
 
 ```
 
-You also need a running MongoDB
+# How to deploy
 
-#Install dependencies
-Run 
+I've decided to use Docker to deploy the application. As Docker is the latest and gretest so why not. The process is a little bit strange but why not!. This application can be deployed to any docker machine.
 
-```
-pip install -r requirements.txt
-```
+After you've spun up a new machine with Docker running. If you're using Amazon EC2 please have a look at this [page](http://docs.aws.amazon.com/AmazonECS/latest/developerguide/docker-basics.html), in case you want to install Docker on Amazon AMI.
 
-# How to run
-
-To start a streaming client I recommend to use supervisor. Place this config to `/etc/supervisor/conf.d/streaming.conf`
+## Build your image
 
 ```
-[program:twitter_streaming]
-command=/usr/bin/python /home/ubuntu/sweepy/stream.py
-directory=/home/ubuntu/sweepy
-autostart=true
-autorestart=true
-startretries=3
-stderr_logfile=/home/ubuntu/stream.err.log
-stdout_logfile=/home/ubuntu/stream.out.log
-user=ubuntu
+make build-docker
 ```
 
-Change the configuration according to your enviroment. I put this script on EC2
-
-Reread the configuration
-
+## Run the container
 ```
-sudo supervisorctl reread
+make run-container
 ```
 
-And update the configuration
-
-```
-sudo supervisorctl update
-```
-
-The script should be up and running. 
-
-# Processer script
-
+# Run streaming client
 You can just run 
 
+```
+make run-stream
+```
+
+# Run processer client
 ```
 make run-processer
 ```

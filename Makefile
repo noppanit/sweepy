@@ -5,7 +5,7 @@ run-processer:
 	nohup python -u sweepy.py >processer.out 2>processer.err &
 
 build-docker:
-	docker build -t sweepy .
+	sudo docker build -t sweepy .
 
 run-container:
-	docker run -d -P sweepy supervisord
+	sudo docker run -d -P sweepy supervisord
