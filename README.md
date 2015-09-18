@@ -36,8 +36,8 @@ To start a streaming client I recommend to use supervisor. Place this config to 
 
 ```
 [program:twitter_streaming]
-command=/usr/bin/python /home/ubuntu/stream.py
-directory=/home/ubuntu
+command=/usr/bin/python /home/ubuntu/sweepy/stream.py
+directory=/home/ubuntu/sweepy
 autostart=true
 autorestart=true
 startretries=3
